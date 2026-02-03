@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["core/**/*.ts", "lib/**/*.ts", "hooks/**/*.ts", "app/**/*.tsx", "components/**/*.tsx", "vite-env.d.ts"]
+}
