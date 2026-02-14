@@ -9,12 +9,14 @@ import {
   processAssistantReply,
 } from "../lib/chat";
 import type { ChatMessage } from "../lib/types";
+import { useAuth } from "../components/auth/AuthContext";
 
 function nextId(): string {
   return crypto.randomUUID?.() ?? `id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
 export function useChat() {
+  const { accessToken } = useAuth();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +44,7 @@ export function useChat() {
       const rawReply = await fetchAssistantReply({
         systemPrompt,
         messages: apiMessages,
+        accessToken: accessToken ?? undefined,
       });
       const processed = processAssistantReply(rawReply, trimmed);
       const assistantMsg: ChatMessage = {
@@ -56,7 +59,7 @@ export function useChat() {
     } finally {
       setIsLoading(false);
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, accessToken]);
 
   return { messages, isLoading, error, sendMessage };
 }
