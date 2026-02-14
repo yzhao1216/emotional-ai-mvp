@@ -16,7 +16,6 @@ export function Message({ message, onRevealComplete }: MessageProps) {
 
   return (
     <div className={`message message--${message.role}`} data-role={message.role}>
-      <span className="message__role">{isUser ? "You" : "Anchor"}</span>
       <div className="message__content">
         {isUser ? (
           message.content

@@ -13,10 +13,16 @@ export interface ChatApiOptions {
 /**
  * Call backend /api/chat; returns raw assistant reply. No API key in the browser.
  */
-export async function fetchAssistantReply(opts: ChatApiOptions): Promise<string> {
+export async function fetchAssistantReply(
+  opts: ChatApiOptions & { accessToken?: string }
+): Promise<string> {
   const res = await fetch("/api/chat", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(opts.accessToken ? { Authorization: `Bearer ${opts.accessToken}` } : {}),
+    },
     body: JSON.stringify({
       systemPrompt: opts.systemPrompt,
       messages: opts.messages,
